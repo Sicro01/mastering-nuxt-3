@@ -25,7 +25,8 @@ const login = async () => {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: 'github',
   });
-
+  const { data } = await supabase.auth.getSession()
+  console.log('here 6', data);
   if (error) {
     console.error(error);
   }
