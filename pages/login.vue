@@ -24,12 +24,16 @@ const login = async () => {
 };
 
 supabase.auth.onAuthStateChange((_, _session) => {
+  console.log('firing');
+
   if (_session?.access_token) {
     const accessToken = useCookie('sb-access-token')
     const refreshToken = useCookie('sb-refresh-token')
     accessToken.value = _session?.access_token ?? null
     refreshToken.value = _session?.refresh_token ?? null
+    useSupabaseUser().value = _session.user
   }
 })
+
 
 </script>
