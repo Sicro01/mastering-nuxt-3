@@ -1,12 +1,10 @@
 <template>
   <div
     v-if="user"
-    class="rounded p-3 flex items-center space-x-3 bg-white"
-  >
+    class="rounded p-3 flex items-center space-x-3 bg-white">
     <img
       class="rounded-full w-12 h-12 border-2 border-blue-400"
-      :src="profile"
-    />
+      :src="profile" />
     <div class="text-right">
       <div class="font-medium">{{ name }}</div>
       <button class="text-sm underline text-slate-500">
@@ -18,6 +16,7 @@
 
 <script setup lang="ts">
 const user = useSupabaseUser();
+console.log(user.value);
 
 const name = computed(
   () => user?.value.user_metadata.full_name
