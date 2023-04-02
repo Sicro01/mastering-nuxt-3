@@ -4,9 +4,9 @@
     class="rounded p-3 flex items-center space-x-3 bg-white">
     <img
       class="rounded-full w-12 h-12 border-2 border-blue-400"
-      :src="profile" />
+      :src="user.user_metadata.profile" />
     <div class="text-right">
-      <div class="font-medium">{{ name }}</div>
+      <div class="font-medium">{{ user.user_meta_data.name }}</div>
       <button class="text-sm underline text-slate-500">
         Log out
       </button>
@@ -15,17 +15,18 @@
 </template>
 
 <script setup lang="ts">
-const user = useSupabaseUser();
+// const user = useSupabaseUser();
 const supabase = useSupabaseClient();
 
-const name = ref();
-const profile = ref();
+// const name = ref();
+// const profile = ref();
+const user = ref();
 onMounted(async () => {
   const { data, error } = await supabase.auth.getSession()
-  console.log('here 4', data.session?.user.user_metadata.full_name);
-  console.log('here 4', data.session?.user.user_metadata.avatar_url);
-  name.value = data.session?.user.user_metadata.full_name;
-  profile.value = data.session?.user.user_metadata.profile;
+  user.value = data.session?.user;
+  console.log('here 4', user.value.user_metadata.full_name);
+  console.log('here 4', user.value.user_metadata.avatar_url);
+  // profile.value = data.session?.user.user_metadata.profile;
   // if (!data.session) {
   //   const { data: user, error } = await supabase.auth.refreshSession();
   //   console.log('here 3', user);
