@@ -20,6 +20,7 @@ const supabase = useSupabaseClient();
 
 onMounted(async () => {
   const { data, error } = await supabase.auth.getSession()
+  console.log('here 4', data);
   if (!data.session) {
     const { data: user, error } = await supabase.auth.refreshSession();
     console.log('here 3', user);
