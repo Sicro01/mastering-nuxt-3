@@ -13,26 +13,26 @@
 const { title } = useCourse();
 const supabase = useSupabaseClient();
 
-const user = useSupabaseUser()
+// const user = useSupabaseUser()
 
-watch(user, () => {
-  if (user.value) {
-    console.log('firing 1');
-  }
-})
+// watch(user, () => {
+//   if (user.value) {
+//     console.log('firing 1');
+//   }
+// })
 
 const login = async () => {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: 'github',
   });
-  const { data } = await supabase.auth.getSession()
-  console.log('here 7', data);
-  if (!data.session) {
-    const { data, error } = await supabase.auth.refreshSession()
-    let { user } = data
-    console.log('here 8', data);
-    console.log('here 9', user);
-  }
+  // const { data } = await supabase.auth.getSession()
+  // console.log('here 7', data);
+  // if (!data.session) {
+  //   const { data, error } = await supabase.auth.refreshSession()
+  //   let { user } = data
+  //   console.log('here 8', data);
+  //   console.log('here 9', user);
+  // }
   if (error) {
     console.error(error);
   }

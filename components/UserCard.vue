@@ -18,13 +18,18 @@
 const user = useSupabaseUser();
 const supabase = useSupabaseClient();
 
+const name = ref();
+const profile = ref();
 onMounted(async () => {
   const { data, error } = await supabase.auth.getSession()
-  console.log('here 4', data);
-  if (!data.session) {
-    const { data: user, error } = await supabase.auth.refreshSession();
-    console.log('here 3', user);
-  }
+  console.log('here 4', data.session?.user.user_metadata.full_name);
+  console.log('here 4', data.session?.user.user_metadata.avatar_url);
+  name.value = data.session?.user.user_metadata.full_name;
+  profile.value = data.session?.user.user_metadata.profile;
+  // if (!data.session) {
+  //   const { data: user, error } = await supabase.auth.refreshSession();
+  //   console.log('here 3', user);
+  // }
 
 })
 
@@ -49,14 +54,14 @@ onMounted(async () => {
 //   console.log('_user', _user);
 // })
 
-const name = computed(
-  () => {
-    console.log('here 2');
-    console.log(user?.value.user_metadata);
-    return user?.value.user_metadata.full_name
-  }
-);
-const profile = computed(
-  () => user?.value.user_metadata.avatar_url
-);
+// const name = computed(
+//   () => {
+//     console.log('here 2');
+//     console.log(user?.value.user_metadata);
+//     return user?.value.user_metadata.full_name
+//   }
+// );
+// const profile = computed(
+//   () => user?.value.user_metadata.avatar_url
+// );
 </script>
