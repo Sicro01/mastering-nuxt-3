@@ -27,6 +27,9 @@ const login = async () => {
     provider: 'github',
   });
 
+  const { data } = await supabase.auth.refreshSession()
+  console.log(data);
+
   if (error) {
     console.error(error);
   }
@@ -35,8 +38,12 @@ const login = async () => {
 let { data } = await supabase.auth.getSession()
 
 if (!data.session) {
-  console.log('firing 2');
+  console.log('firing 2', data.session);
 
+  const accessToken = useCookie('sb-access-token')
+  const refreshToken = useCookie('sb-refresh-token')
+  accessToken.value = _session?.access_token ?? null
+  refreshToken.value = _session?.refresh_token ?? null
 }
 
 supabase.auth.onAuthStateChange((_, _session) => {
