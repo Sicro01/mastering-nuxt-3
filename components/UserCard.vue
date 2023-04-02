@@ -16,10 +16,23 @@
 
 <script setup lang="ts">
 const user = useSupabaseUser();
+const supabaseClient = useSupabaseClient();
 console.log('here 1');
 if (user) {
   // console.log(user?.value.user_metadata);
 }
+
+supabaseClient.auth.onAuthStateChange((_, _session) => {
+  console.log('hi');
+
+  if (_session?.access_token) {
+    console.log('hi', _session);
+    const accessToken = useCookie('sb-access-token')
+    const refreshToken = useCookie('sb-refresh-token')
+    accessToken.value = _session?.access_token ?? null
+    refreshToken.value = _session?.refresh_token ?? null
+  }
+})
 
 watch(user, (_user) => {
   console.log('_user', _user);
