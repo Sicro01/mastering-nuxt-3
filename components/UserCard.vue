@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 const user = useSupabaseUser();
-console.log(user.value);
+console.log(user);
 
 const name = computed(
   () => user?.value.user_metadata.full_name
