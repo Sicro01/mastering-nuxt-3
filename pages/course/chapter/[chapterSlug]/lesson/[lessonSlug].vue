@@ -8,27 +8,24 @@
       <NuxtLink
         v-if="lesson.sourceUrl"
         class="font-normal text-md text-gray-500"
-        :to="lesson.sourceUrl"
-      >
+        :to="lesson.sourceUrl">
         Download Source Code
       </NuxtLink>
       <NuxtLink
         v-if="lesson.downloadUrl"
         class="font-normal text-md text-gray-500"
-        :to="lesson.downloadUrl"
-      >
+        :to="lesson.downloadUrl">
         Download Video
       </NuxtLink>
     </div>
-    <VideoPlayer
+    <!-- <VideoPlayer
       v-if="lesson.videoId"
       :videoId="lesson.videoId"
-    />
+    /> -->
     <p>{{ lesson.text }}</p>
     <LessonCompleteButton
       :model-value="isLessonComplete"
-      @update:model-value="toggleComplete"
-    />
+      @update:model-value="toggleComplete" />
   </div>
 </template>
 
@@ -99,7 +96,7 @@ const isLessonComplete = computed(() => {
 
   if (
     !progress.value[chapter.value.number - 1][
-      lesson.value.number - 1
+    lesson.value.number - 1
     ]
   ) {
     return false;

@@ -16,10 +16,17 @@
 
 <script setup lang="ts">
 const user = useSupabaseUser();
-console.log(user.value?.user_metadata);
+// console.log(user.value?.user_metadata);
+if (user) {
+  // console.log(user?.value.user_metadata);
+}
 
 const name = computed(
-  () => user?.value.user_metadata.full_name
+  () => {
+    console.log('here');
+    console.log(user?.value.user_metadata);
+    return user?.value.user_metadata.full_name
+  }
 );
 const profile = computed(
   () => user?.value.user_metadata.avatar_url
