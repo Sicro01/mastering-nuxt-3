@@ -18,10 +18,9 @@
         Download Video
       </NuxtLink>
     </div>
-    <!-- <VideoPlayer
+    <VideoPlayer
       v-if="lesson.videoId"
-      :videoId="lesson.videoId"
-    /> -->
+      :videoId="lesson.videoId" />
     <p>{{ lesson.text }}</p>
     <LessonCompleteButton
       :model-value="isLessonComplete"

@@ -21,6 +21,11 @@ if (user) {
   // console.log(user?.value.user_metadata);
 }
 
+watch(user, (_user) => {
+  console.log('_user', _user);
+
+})
+
 const name = computed(
   () => {
     console.log('here');
