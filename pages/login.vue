@@ -15,10 +15,9 @@ const supabase = useSupabaseClient();
 
 const user = useSupabaseUser()
 
-watchEffect(() => {
+watch(user, () => {
   if (user.value) {
     console.log('firing 1');
-
   }
 })
 
@@ -27,36 +26,33 @@ const login = async () => {
     provider: 'github',
   });
 
-  const { data } = await supabase.auth.refreshSession()
-  console.log(data);
-
   if (error) {
     console.error(error);
   }
 };
 
-let { data } = await supabase.auth.getSession()
+  // let { data } = await supabase.auth.getSession()
 
-// if (!data.session) {
-//   console.log('firing 2', data.session);
+  // if (!data.session) {
+  //   console.log('firing 2', data.session);
 
-//   const accessToken = useCookie('sb-access-token')
-//   const refreshToken = useCookie('sb-refresh-token')
-//   accessToken.value = _session?.access_token ?? null
-//   refreshToken.value = _session?.refresh_token ?? null
-// }
+  //   const accessToken = useCookie('sb-access-token')
+  //   const refreshToken = useCookie('sb-refresh-token')
+  //   accessToken.value = _session?.access_token ?? null
+  //   refreshToken.value = _session?.refresh_token ?? null
+  // }
 
-supabase.auth.onAuthStateChange((_, _session) => {
-  console.log('firing');
+  // supabase.auth.onAuthStateChange((_, _session) => {
+  //   console.log('firing');
 
-  if (_session?.access_token) {
-    const accessToken = useCookie('sb-access-token')
-    const refreshToken = useCookie('sb-refresh-token')
-    accessToken.value = _session?.access_token ?? null
-    refreshToken.value = _session?.refresh_token ?? null
-    useSupabaseUser().value = _session.user
-  }
-})
+  //   if (_session?.access_token) {
+  //     const accessToken = useCookie('sb-access-token')
+  //     const refreshToken = useCookie('sb-refresh-token')
+  //     accessToken.value = _session?.access_token ?? null
+  //     refreshToken.value = _session?.refresh_token ?? null
+  //     useSupabaseUser().value = _session.user
+  //   }
+  // })
 
 
 </script>
