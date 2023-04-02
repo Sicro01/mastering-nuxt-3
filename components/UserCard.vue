@@ -15,54 +15,23 @@
 </template>
 
 <script setup lang="ts">
-// const user = useSupabaseUser();
 const supabase = useSupabaseClient();
 
-// const name = ref();
-// const profile = ref();
 const user = ref();
 onMounted(async () => {
-  const { data, error } = await supabase.auth.getSession()
-  user.value = data.session?.user.user_metadata;
-  console.log('here 4', user.value.full_name);
-  console.log('here 4', user.value.avatar_url);
-  // profile.value = data.session?.user.user_metadata.profile;
-  // if (!data.session) {
-  //   const { data: user, error } = await supabase.auth.refreshSession();
-  //   console.log('here 3', user);
-  // }
-
+  try {
+    const { data, error } = await supabase.auth.getSession()
+    if (error) {
+      console.log('Supabase getSession', error);
+      navigateTo('/login');
+    };
+    user.value = data.session?.user.user_metadata;
+  }
+  catch (err) {
+    console.log('Unknown error getting user', err);
+    navigateTo('/login');
+  }
 })
 
-// console.log('here 1');
-// if (user) {
-// console.log(user?.value.user_metadata);
-// }
 
-// supabaseClient.auth.onAuthStateChange((_, _session) => {
-//   console.log('hi');
-
-//   if (_session?.access_token) {
-//     console.log('hi', _session);
-//     const accessToken = useCookie('sb-access-token')
-//     const refreshToken = useCookie('sb-refresh-token')
-//     accessToken.value = _session?.access_token ?? null
-//     refreshToken.value = _session?.refresh_token ?? null
-//   }
-// })
-
-// watch(user, (_user) => {
-//   console.log('_user', _user);
-// })
-
-// const name = computed(
-//   () => {
-//     console.log('here 2');
-//     console.log(user?.value.user_metadata);
-//     return user?.value.user_metadata.full_name
-//   }
-// );
-// const profile = computed(
-//   () => user?.value.user_metadata.avatar_url
-// );
 </script>
