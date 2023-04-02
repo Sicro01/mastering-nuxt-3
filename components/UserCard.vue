@@ -16,19 +16,18 @@
 
 <script setup lang="ts">
 const user = useSupabaseUser();
-// console.log(user.value?.user_metadata);
+console.log('here 1');
 if (user) {
   // console.log(user?.value.user_metadata);
 }
 
 watch(user, (_user) => {
   console.log('_user', _user);
-
 })
 
 const name = computed(
   () => {
-    console.log('here');
+    console.log('here 2');
     console.log(user?.value.user_metadata);
     return user?.value.user_metadata.full_name
   }
