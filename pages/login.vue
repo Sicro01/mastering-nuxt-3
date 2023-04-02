@@ -13,6 +13,15 @@
 const { title } = useCourse();
 const supabase = useSupabaseClient();
 
+const user = useSupabaseUser()
+
+watchEffect(() => {
+  if (user.value) {
+    console.log('firing 1');
+
+  }
+})
+
 const login = async () => {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: 'github',
@@ -22,6 +31,13 @@ const login = async () => {
     console.error(error);
   }
 };
+
+let { data } = await supabase.auth.getSession()
+
+if (!data.session) {
+  console.log('firing 2');
+
+}
 
 supabase.auth.onAuthStateChange((_, _session) => {
   console.log('firing');
