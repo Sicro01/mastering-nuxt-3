@@ -13,53 +13,13 @@
 const { title } = useCourse();
 const supabase = useSupabaseClient();
 
-// const user = useSupabaseUser()
-
-// watch(user, () => {
-//   if (user.value) {
-//     console.log('firing 1');
-//   }
-// })
-
 const login = async () => {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: 'github',
   });
-  // const { data } = await supabase.auth.getSession()
-  // console.log('here 7', data);
-  // if (!data.session) {
-  //   const { data, error } = await supabase.auth.refreshSession()
-  //   let { user } = data
-  //   console.log('here 8', data);
-  //   console.log('here 9', user);
-  // }
+
   if (error) {
     console.error(error);
   }
 };
-
-  // let { data } = await supabase.auth.getSession()
-
-  // if (!data.session) {
-  //   console.log('firing 2', data.session);
-
-  //   const accessToken = useCookie('sb-access-token')
-  //   const refreshToken = useCookie('sb-refresh-token')
-  //   accessToken.value = _session?.access_token ?? null
-  //   refreshToken.value = _session?.refresh_token ?? null
-  // }
-
-  // supabase.auth.onAuthStateChange((_, _session) => {
-  //   console.log('firing');
-
-  //   if (_session?.access_token) {
-  //     const accessToken = useCookie('sb-access-token')
-  //     const refreshToken = useCookie('sb-refresh-token')
-  //     accessToken.value = _session?.access_token ?? null
-  //     refreshToken.value = _session?.refresh_token ?? null
-  //     useSupabaseUser().value = _session.user
-  //   }
-  // })
-
-
 </script>

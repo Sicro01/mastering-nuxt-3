@@ -7,7 +7,9 @@
       :src="user.avatar_url" />
     <div class="text-right">
       <div class="font-medium">{{ user.full_name }}</div>
-      <button class="text-sm underline text-slate-500">
+      <button
+        @click="logout"
+        class="text-sm underline text-slate-500">
         Log out
       </button>
     </div>
@@ -23,15 +25,26 @@ onMounted(async () => {
     const { data, error } = await supabase.auth.getSession()
     if (error) {
       console.log('Supabase getSession', error);
-      navigateTo('/login');
+      await navigateTo('/login');
     };
     user.value = data.session?.user.user_metadata;
   }
   catch (err) {
     console.log('Unknown error getting user', err);
-    navigateTo('/login');
+    await navigateTo('/login');
   }
 })
 
+const logout = async () => {
+  console.log('here');
 
+  const { error } = await supabase.auth.signOut();
+
+  if (error) {
+    console.log(error);
+    return;
+  }
+
+  await navigateTo('/login');
+}
 </script>
