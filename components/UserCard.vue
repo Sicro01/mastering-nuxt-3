@@ -16,24 +16,35 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 const supabase = useSupabaseClient();
 
-const user = ref();
+const user = ref(null);
 onMounted(async () => {
-  try {
-    const { data, error } = await supabase.auth.getSession()
-    if (error) {
-      console.log('Supabase getSession', error);
-      await navigateTo('/login');
-    };
-    user.value = data.session?.user.user_metadata;
-  }
-  catch (err) {
-    console.log('Unknown error getting user', err);
+  const { user: _user, error } = await getUser();
+  console.log(_user.value, error.value);
+  if (error) {
+    console.log('Error getting user: ', error.value);
     await navigateTo('/login');
   }
+  user.value = _user.value;
 })
+
+// const user = ref();
+// onMounted(async () => {
+//   try {
+//     const { data, error } = await supabase.auth.getSession()
+//     if (error) {
+//       console.log('Supabase getSession', error);
+//       await navigateTo('/login');
+//     };
+//     user.value = data.session?.user.user_metadata;
+//   }
+//   catch (err) {
+//     console.log('Unknown error getting user', err);
+//     await navigateTo('/login');
+//   }
+// })
 
 const logout = async () => {
   const { error } = await supabase.auth.signOut();
