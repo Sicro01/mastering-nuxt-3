@@ -6,11 +6,11 @@ const error = ref(null);
 const getUser = async () => {
   try {
     const { data, error: getError } = await supabase.auth.getSession()
+    console.log(data);
     if (getError) {
       console.log('Supabase getSession', getError);
       error.value = getError;
     };
-    error.value = null;
     user.value = data.session?.user.user_metadata;
   }
   catch (err) {

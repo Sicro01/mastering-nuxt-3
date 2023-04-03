@@ -19,11 +19,12 @@
 <script setup>
 const supabase = useSupabaseClient();
 
+
 const user = ref(null);
 onMounted(async () => {
   const { user: _user, error } = await getUser();
   console.log(_user.value, error.value);
-  if (error) {
+  if (error.value) {
     console.log('Error getting user: ', error.value);
     await navigateTo('/login');
   }
