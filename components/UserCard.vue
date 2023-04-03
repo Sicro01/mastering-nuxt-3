@@ -36,8 +36,6 @@ onMounted(async () => {
 })
 
 const logout = async () => {
-  console.log('here');
-
   const { error } = await supabase.auth.signOut();
 
   if (error) {
