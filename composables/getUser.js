@@ -1,12 +1,9 @@
-const supabase = useSupabaseClient();
-
 const user = ref(null)
 const error = ref(null);
 
-const getUser = async () => {
+const getUser = async (supabase) => {
   try {
     const { data, error: getError } = await supabase.auth.getSession()
-    console.log(data);
     if (getError) {
       console.log('Supabase getSession', getError);
       error.value = getError;
