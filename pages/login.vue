@@ -9,7 +9,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 const course = await useCourse();
 const { query } = useRoute();
 const supabase = useSupabaseClient();
