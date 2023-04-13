@@ -8,35 +8,38 @@
       <NuxtLink
         v-if="lesson.sourceUrl"
         class="font-normal text-md text-gray-500"
-        :to="lesson.sourceUrl"
-      >
+        :to="lesson.sourceUrl">
         Download Source Code
       </NuxtLink>
       <NuxtLink
         v-if="lesson.downloadUrl"
         class="font-normal text-md text-gray-500"
-        :to="lesson.downloadUrl"
-      >
+        :to="lesson.downloadUrl">
         Download Video
       </NuxtLink>
     </div>
     <VideoPlayer
       v-if="lesson.videoId"
-      :videoId="lesson.videoId"
-    />
+      :videoId="lesson.videoId" />
     <p>{{ lesson.text }}</p>
     <LessonCompleteButton
-      :model-value="isLessonComplete"
-      @update:model-value="toggleComplete"
-    />
+      v-if="user"
+      :model-value="isCompleted"
+      @update:model-value="toggleComplete" />
   </div>
 </template>
 
 <script setup>
+import { useCourseProgress } from '~~/stores/courseProgress';
 const course = await useCourse();
 const route = useRoute();
+const user = useSupabaseUser();
 const { chapterSlug, lessonSlug } = route.params;
 const lesson = await useLesson(chapterSlug, lessonSlug);
+const store = useCourseProgress();
+const { initialize, toggleComplete } = store;
+
+initialize();
 
 definePageMeta({
   middleware: [
@@ -73,6 +76,10 @@ definePageMeta({
   ],
 });
 
+const isCompleted = computed(() => {
+  return store.progress?.[chapterSlug]?.[lessonSlug] || 0;
+});
+
 const chapter = computed(() => {
   return course.value.chapters.find(
     (chapter) => chapter.slug === route.params.chapterSlug
@@ -82,37 +89,5 @@ const chapter = computed(() => {
 const title = computed(() => {
   return `${lesson.value.title} - ${course.value.title}`;
 });
-useHead({
-  title,
-});
-
-const progress = useLocalStorage('progress', []);
-
-const isLessonComplete = computed(() => {
-  if (!progress.value[chapter.value.number - 1]) {
-    return false;
-  }
-
-  if (
-    !progress.value[chapter.value.number - 1][
-      lesson.value.number - 1
-    ]
-  ) {
-    return false;
-  }
-
-  return progress.value[chapter.value.number - 1][
-    lesson.value.number - 1
-  ];
-});
-
-const toggleComplete = () => {
-  if (!progress.value[chapter.value.number - 1]) {
-    progress.value[chapter.value.number - 1] = [];
-  }
-
-  progress.value[chapter.value.number - 1][
-    lesson.value.number - 1
-  ] = !isLessonComplete.value;
-};
+useHead({ title });
 </script>

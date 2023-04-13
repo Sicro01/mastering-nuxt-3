@@ -19,7 +19,9 @@
     "@prisma/client": "^4.7.1",
     "@tailwindcss/typography": "^0.5.8",
     "@vueuse/core": "^9.6.0",
-    "@vueuse/nuxt": "^9.6.0"
+    "@vueuse/nuxt": "^9.6.0",
+    "stripe": "^12.0.0",
+    "vite-plugin-vsharp": "^1.4.2"
   },
   "dependencies": {
     "nuxt": "^3.3.3",
